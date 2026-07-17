@@ -1,1469 +1,585 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<meta charset="UTF-8">
+    <title>Smart Metro ABS SCADA Monitoring System</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
 
-<title>
-Smart Metro ABS SCADA Monitoring System
-</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<link rel="stylesheet" href="style.css">
+  <body>
+    <header class="occ-header">
+      <div class="title-section">
+        <h1>🚇 Smart Metro Automatic Block Signalling & SCADA</h1>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <p>Operations Control Centre (OCC) Simulation</p>
+      </div>
 
-</head>
+      <div class="system-panel">
+        <div class="status">
+          <h4>SYSTEM STATUS</h4>
 
+          <span id="systemStatus"> NORMAL </span>
+        </div>
 
-<body>
+        <div class="clock">
+          <h4>TIME</h4>
 
+          <span id="clock"> 00:00:00 </span>
+        </div>
 
-<header class="occ-header">
+        <button id="startBtn">▶ START</button>
 
+        <button id="stopBtn">■ STOP</button>
 
-<div class="title-section">
+        <button id="emergencyBtn">🚨 EMERGENCY</button>
 
-<h1>
-🚇 Smart Metro Automatic Block Signalling & SCADA
-</h1>
+        <button id="resetBtn">🔄 RESET</button>
+      </div>
+    </header>
 
+    <section class="dashboard">
+      <div class="card">
+        <h3>UP TRAINS</h3>
 
-<p>
-Operations Control Centre (OCC) Simulation
-</p>
+        <h1 id="upCount">2</h1>
 
+        <p>Running on UP line</p>
+      </div>
 
-</div>
+      <div class="card">
+        <h3>DOWN TRAINS</h3>
 
+        <h1 id="downCount">2</h1>
 
+        <p>Running on DOWN line</p>
+      </div>
 
-<div class="system-panel">
+      <div class="card">
+        <h3>ACTIVE BLOCKS</h3>
 
+        <h1 id="blockCount">0</h1>
 
-<div class="status">
+        <p>Occupied Sections</p>
+      </div>
 
-<h4>
-SYSTEM STATUS
-</h4>
+      <div class="card">
+        <h3>ACTIVE ALARMS</h3>
 
-<span id="systemStatus">
-NORMAL
-</span>
+        <h1 id="alarmCount">0</h1>
 
-</div>
+        <p>System Alerts</p>
+      </div>
+    </section>
+    <section class="line-section">
+      <h2>🔵 UP LINE (Station A → Station B)</h2>
 
+      <div class="station-bar">
+        <div class="station">🚉 Station A</div>
 
+        <div class="station">🚉 Station B</div>
+      </div>
 
-<div class="clock">
+      <div class="track-area">
+        <div class="train-track">
+          <div class="train up-train" id="U1">🚇 U1</div>
 
-<h4>
-TIME
-</h4>
+          <div class="train up-train second" id="U2">🚇 U2</div>
+        </div>
 
-<span id="clock">
-00:00:00
-</span>
+        <div class="blocks">
+          <div class="block">
+            <div class="signal green" id="US1"></div>
 
-</div>
+            <h3>SIGNAL US1</h3>
 
+            <h4>BLOCK 1</h4>
 
+            <p id="UB1">FREE</p>
 
-<button id="startBtn">
-▶ START
-</button>
+            <div class="signal-info">
+              <span> Aspect: </span>
 
+              <b id="US1Aspect"> GREEN </b>
 
-<button id="stopBtn">
-■ STOP
-</button>
+              <br />
 
+              <span> Reason: </span>
 
-<button id="emergencyBtn">
-🚨 EMERGENCY
-</button>
+              <p id="US1Reason">Two blocks clear</p>
+            </div>
+          </div>
 
-<button id="resetBtn">
-🔄 RESET
-</button>
-</div>
+          <div class="block">
+            <div class="signal green" id="US2"></div>
 
+            <h3>SIGNAL US2</h3>
 
-</header>
+            <h4>BLOCK 2</h4>
 
+            <p id="UB2">FREE</p>
 
+            <div class="signal-info">
+              <span> Aspect: </span>
 
+              <b id="US2Aspect"> GREEN </b>
 
+              <br />
 
-<section class="dashboard">
+              <span> Reason: </span>
 
+              <p id="US2Reason">Two blocks clear</p>
+            </div>
+          </div>
 
-<div class="card">
+          <div class="block">
+            <div class="signal green" id="US3"></div>
 
-<h3>
-UP TRAINS
-</h3>
+            <h3>SIGNAL US3</h3>
 
-<h1 id="upCount">
-2
-</h1>
+            <h4>BLOCK 3</h4>
 
-<p>
-Running on UP line
-</p>
+            <p id="UB3">FREE</p>
 
-</div>
+            <div class="signal-info">
+              <span> Aspect: </span>
 
+              <b id="US3Aspect"> GREEN </b>
 
+              <br />
 
-<div class="card">
+              <span> Reason: </span>
 
-<h3>
-DOWN TRAINS
-</h3>
+              <p id="US3Reason">Two blocks clear</p>
+            </div>
+          </div>
 
-<h1 id="downCount">
-2
-</h1>
+          <div class="block">
+            <div class="signal green" id="US4"></div>
 
-<p>
-Running on DOWN line
-</p>
+            <h3>SIGNAL US4</h3>
 
-</div>
+            <h4>BLOCK 4</h4>
 
+            <p id="UB4">FREE</p>
 
+            <div class="signal-info">
+              <span> Aspect: </span>
 
+              <b id="US4Aspect"> GREEN </b>
 
-<div class="card">
+              <br />
 
-<h3>
-ACTIVE BLOCKS
-</h3>
+              <span> Reason: </span>
 
-<h1 id="blockCount">
-0
-</h1>
+              <p id="US4Reason">Two blocks clear</p>
+            </div>
+          </div>
 
-<p>
-Occupied Sections
-</p>
+          <div class="block platform">
+            <div class="signal red" id="US5"></div>
 
-</div>
+            <h3>SIGNAL USP</h3>
 
+            <h4>PLATFORM</h4>
 
+            <p id="UB5">FREE</p>
 
+            <div class="signal-info">
+              <span> Aspect: </span>
 
+              <b id="US5Aspect"> RED </b>
 
-<div class="card">
+              <br />
 
-<h3>
-ACTIVE ALARMS
-</h3>
+              <span> Reason: </span>
 
-<h1 id="alarmCount">
-0
-</h1>
+              <p id="US5Reason">Platform occupied</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="line-section">
+      <h2>🟠 DOWN LINE (Station B → Station A)</h2>
 
-<p>
-System Alerts
-</p>
+      <div class="station-bar">
+        <div class="station">🚉 Station B</div>
 
-</div>
+        <div class="station">🚉 Station A</div>
+      </div>
 
+      <div class="track-area">
+        <div class="train-track">
+          <div class="train down-train" id="D1">🚇 D1</div>
 
+          <div class="train down-train second" id="D2">🚇 D2</div>
+        </div>
 
-</section>
-<section class="line-section">
+        <div class="blocks">
+          <div class="block platform">
+            <div class="signal red" id="DS5"></div>
 
+            <h3>SIGNAL DSP</h3>
 
-<h2>
-🔵 UP LINE (Station A → Station B)
-</h2>
+            <h4>PLATFORM</h4>
 
+            <p id="DB5">FREE</p>
 
-<div class="station-bar">
+            <div class="signal-info">
+              <span> Aspect: </span>
 
-<div class="station">
-🚉 Station A
-</div>
+              <b id="DS5Aspect"> RED </b>
 
+              <br />
 
-<div class="station">
-🚉 Station B
-</div>
+              <span> Reason: </span>
 
+              <p id="DS5Reason">Platform occupied</p>
+            </div>
+          </div>
 
-</div>
+          <div class="block">
+            <div class="signal green" id="DS4"></div>
 
+            <h3>SIGNAL DS4</h3>
 
+            <h4>BLOCK 4</h4>
 
+            <p id="DB4">FREE</p>
 
-<div class="track-area">
+            <div class="signal-info">
+              <span> Aspect: </span>
 
+              <b id="DS4Aspect"> GREEN </b>
 
+              <br />
 
-<div class="train-track">
+              <span> Reason: </span>
 
+              <p id="DS4Reason">Two blocks clear</p>
+            </div>
+          </div>
 
+          <div class="block">
+            <div class="signal green" id="DS3"></div>
 
-<div class="train up-train" id="U1">
+            <h3>SIGNAL DS3</h3>
 
-🚇 U1
+            <h4>BLOCK 3</h4>
 
-</div>
+            <p id="DB3">FREE</p>
 
+            <div class="signal-info">
+              <span> Aspect: </span>
 
+              <b id="DS3Aspect"> GREEN </b>
 
-<div class="train up-train second" id="U2">
+              <br />
 
-🚇 U2
+              <span> Reason: </span>
 
-</div>
+              <p id="DS3Reason">Two blocks clear</p>
+            </div>
+          </div>
 
+          <div class="block">
+            <div class="signal green" id="DS2"></div>
 
+            <h3>SIGNAL DS2</h3>
 
-</div>
+            <h4>BLOCK 2</h4>
 
+            <p id="DB2">FREE</p>
 
+            <div class="signal-info">
+              <span> Aspect: </span>
 
+              <b id="DS2Aspect"> GREEN </b>
 
+              <br />
 
-<div class="blocks">
+              <span> Reason: </span>
 
+              <p id="DS2Reason">Two blocks clear</p>
+            </div>
+          </div>
 
+          <div class="block">
+            <div class="signal green" id="DS1"></div>
 
-<div class="block">
+            <h3>SIGNAL DS1</h3>
 
-<div class="signal green" id="US1"></div>
+            <h4>BLOCK 1</h4>
 
+            <p id="DB1">FREE</p>
 
-<h3>
-SIGNAL US1
-</h3>
+            <div class="signal-info">
+              <span> Aspect: </span>
 
+              <b id="DS1Aspect"> GREEN </b>
 
-<h4>
-BLOCK 1
-</h4>
+              <br />
 
+              <span> Reason: </span>
 
-<p id="UB1">
-FREE
-</p>
+              <p id="DS1Reason">Two blocks clear</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="monitor-section">
+      <div class="train-monitor">
+        <h2>🚆 LIVE TRAIN MONITOR</h2>
 
+        <table>
+          <thead>
+            <tr>
+              <th>Train</th>
 
-<div class="signal-info">
+              <th>Line</th>
 
-<span>
-Aspect:
-</span>
+              <th>Current Block</th>
 
-<b id="US1Aspect">
-GREEN
-</b>
+              <th>Speed</th>
 
+              <th>Signal</th>
 
-<br>
+              <th>Status</th>
+            </tr>
+          </thead>
 
+          <tbody>
+            <tr>
+              <td>U1</td>
 
-<span>
-Reason:
-</span>
+              <td>UP</td>
 
-<p id="US1Reason">
-Two blocks clear
-</p>
+              <td id="u1Block">BLOCK 1</td>
 
+              <td id="u1Speed">45 km/h</td>
 
-</div>
+              <td id="u1Signal">GREEN</td>
 
+              <td id="u1Status">RUNNING</td>
+            </tr>
 
-</div>
+            <tr>
+              <td>U2</td>
 
+              <td>UP</td>
 
+              <td id="u2Block">BLOCK 3</td>
 
+              <td id="u2Speed">45 km/h</td>
 
+              <td id="u2Signal">GREEN</td>
 
+              <td id="u2Status">RUNNING</td>
+            </tr>
 
+            <tr>
+              <td>D1</td>
 
-<div class="block">
+              <td>DOWN</td>
 
-<div class="signal green" id="US2"></div>
+              <td id="d1Block">BLOCK 5</td>
 
+              <td id="d1Speed">45 km/h</td>
 
-<h3>
-SIGNAL US2
-</h3>
+              <td id="d1Signal">GREEN</td>
 
+              <td id="d1Status">RUNNING</td>
+            </tr>
 
-<h4>
-BLOCK 2
-</h4>
+            <tr>
+              <td>D2</td>
 
+              <td>DOWN</td>
 
-<p id="UB2">
-FREE
-</p>
+              <td id="d2Block">BLOCK 2</td>
 
+              <td id="d2Speed">45 km/h</td>
 
-<div class="signal-info">
+              <td id="d2Signal">GREEN</td>
 
+              <td id="d2Status">RUNNING</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-<span>
-Aspect:
-</span>
+      <div class="block-monitor">
+        <h2>📦 BLOCK OCCUPANCY</h2>
 
-<b id="US2Aspect">
-GREEN
-</b>
+        <div id="blockDisplay">
+          <p>
+            UP BLOCK 1 :
+            <span id="upBlock1"> FREE </span>
+          </p>
 
+          <p>
+            UP BLOCK 2 :
+            <span id="upBlock2"> FREE </span>
+          </p>
 
-<br>
+          <p>
+            UP BLOCK 3 :
+            <span id="upBlock3"> FREE </span>
+          </p>
 
+          <p>
+            UP BLOCK 4 :
+            <span id="upBlock4"> FREE </span>
+          </p>
 
-<span>
-Reason:
-</span>
+          <p>
+            DOWN BLOCK 1 :
+            <span id="downBlock1"> FREE </span>
+          </p>
 
-<p id="US2Reason">
-Two blocks clear
-</p>
+          <p>
+            DOWN BLOCK 2 :
+            <span id="downBlock2"> FREE </span>
+          </p>
 
+          <p>
+            DOWN BLOCK 3 :
+            <span id="downBlock3"> FREE </span>
+          </p>
 
-</div>
+          <p>
+            DOWN BLOCK 4 :
+            <span id="downBlock4"> FREE </span>
+          </p>
+        </div>
+      </div>
+    </section>
 
+    <section class="event-section">
+      <div class="event-panel">
+        <h2>📜 SCADA EVENT LOG</h2>
 
-</div>
+        <div id="eventLog">
+          <p>[SYSTEM] SCADA System Ready</p>
 
+          <p>[INFO] Automatic Block Signalling Initialized</p>
+        </div>
+      </div>
 
+      <div class="alarm-panel">
+        <h2>🚨 ALARM PANEL</h2>
 
+        <div id="alarmBox">NO ACTIVE ALARM</div>
+      </div>
+    </section>
+    <section class="system-section">
+      <h2>🖥 SCADA SYSTEM HEALTH</h2>
 
+      <div class="health-grid">
+        <div class="health-card">
+          <h3>Communication</h3>
 
+          <p id="communication">HEALTHY</p>
+        </div>
 
+        <div class="health-card">
+          <h3>Interlocking</h3>
 
-<div class="block">
+          <p id="interlocking">ACTIVE</p>
+        </div>
 
-<div class="signal green" id="US3"></div>
+        <div class="health-card">
+          <h3>Power Supply</h3>
 
+          <p id="power">NORMAL</p>
+        </div>
 
-<h3>
-SIGNAL US3
-</h3>
+        <div class="health-card">
+          <h3>SCADA Server</h3>
 
+          <p id="scada">ONLINE</p>
+        </div>
+      </div>
+    </section>
 
-<h4>
-BLOCK 3
-</h4>
+    <section class="signal-summary">
+      <h2>🚦 SIGNAL SUMMARY</h2>
 
+      <div class="signal-grid">
+        <div class="signal-card">
+          <h3>UP SIGNALS</h3>
 
-<p id="UB3">
-FREE
-</p>
+          <p>
+            US1 :
+            <span id="sumUS1"> GREEN </span>
+          </p>
 
+          <p>
+            US2 :
+            <span id="sumUS2"> GREEN </span>
+          </p>
 
-<div class="signal-info">
+          <p>
+            US3 :
+            <span id="sumUS3"> GREEN </span>
+          </p>
 
+          <p>
+            US4 :
+            <span id="sumUS4"> GREEN </span>
+          </p>
+        </div>
 
-<span>
-Aspect:
-</span>
+        <div class="signal-card">
+          <h3>DOWN SIGNALS</h3>
 
-<b id="US3Aspect">
-GREEN
-</b>
+          <p>
+            DS1 :
+            <span id="sumDS1"> GREEN </span>
+          </p>
 
+          <p>
+            DS2 :
+            <span id="sumDS2"> GREEN </span>
+          </p>
 
-<br>
+          <p>
+            DS3 :
+            <span id="sumDS3"> GREEN </span>
+          </p>
 
+          <p>
+            DS4 :
+            <span id="sumDS4"> GREEN </span>
+          </p>
+        </div>
+      </div>
+    </section>
 
-<span>
-Reason:
-</span>
+    <footer>
+      <div>
+        <h3>🚇 Smart Metro Automatic Block Signalling & SCADA</h3>
 
-<p id="US3Reason">
-Two blocks clear
-</p>
+        <p>Operations Control Centre Simulation</p>
+      </div>
 
+      <div>
+        <p>B.Tech Engineering Project</p>
 
-</div>
+        <p>HTML • CSS • JavaScript</p>
+      </div>
+    </footer>
 
-
-</div>
-
-
-
-
-
-
-
-<div class="block">
-
-<div class="signal green" id="US4"></div>
-
-
-<h3>
-SIGNAL US4
-</h3>
-
-
-<h4>
-BLOCK 4
-</h4>
-
-
-<p id="UB4">
-FREE
-</p>
-
-
-<div class="signal-info">
-
-
-<span>
-Aspect:
-</span>
-
-<b id="US4Aspect">
-GREEN
-</b>
-
-
-<br>
-
-
-<span>
-Reason:
-</span>
-
-<p id="US4Reason">
-Two blocks clear
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="block platform">
-
-
-<div class="signal red" id="US5"></div>
-
-
-<h3>
-SIGNAL USP
-</h3>
-
-
-<h4>
-PLATFORM
-</h4>
-
-
-<p id="UB5">
-FREE
-</p>
-
-
-<div class="signal-info">
-
-
-<span>
-Aspect:
-</span>
-
-<b id="US5Aspect">
-RED
-</b>
-
-
-<br>
-
-
-<span>
-Reason:
-</span>
-
-<p id="US5Reason">
-Platform occupied
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-</section>
-<section class="line-section">
-
-
-<h2>
-🟠 DOWN LINE (Station B → Station A)
-</h2>
-
-
-<div class="station-bar">
-
-
-<div class="station">
-
-🚉 Station B
-
-</div>
-
-
-<div class="station">
-
-🚉 Station A
-
-</div>
-
-
-</div>
-
-
-
-
-<div class="track-area">
-
-
-
-<div class="train-track">
-
-
-
-<div class="train down-train" id="D1">
-
-🚇 D1
-
-</div>
-
-
-
-<div class="train down-train second" id="D2">
-
-🚇 D2
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<div class="blocks">
-
-
-
-<div class="block platform">
-
-
-<div class="signal red" id="DS5"></div>
-
-
-<h3>
-SIGNAL DSP
-</h3>
-
-
-<h4>
-PLATFORM
-</h4>
-
-
-<p id="DB5">
-FREE
-</p>
-
-
-
-<div class="signal-info">
-
-
-<span>
-Aspect:
-</span>
-
-<b id="DS5Aspect">
-RED
-</b>
-
-
-<br>
-
-
-<span>
-Reason:
-</span>
-
-<p id="DS5Reason">
-Platform occupied
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="block">
-
-
-<div class="signal green" id="DS4"></div>
-
-
-<h3>
-SIGNAL DS4
-</h3>
-
-
-<h4>
-BLOCK 4
-</h4>
-
-
-<p id="DB4">
-FREE
-</p>
-
-
-
-<div class="signal-info">
-
-
-<span>
-Aspect:
-</span>
-
-<b id="DS4Aspect">
-GREEN
-</b>
-
-
-<br>
-
-
-<span>
-Reason:
-</span>
-
-<p id="DS4Reason">
-Two blocks clear
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="block">
-
-
-<div class="signal green" id="DS3"></div>
-
-
-<h3>
-SIGNAL DS3
-</h3>
-
-
-<h4>
-BLOCK 3
-</h4>
-
-
-<p id="DB3">
-FREE
-</p>
-
-
-
-<div class="signal-info">
-
-
-<span>
-Aspect:
-</span>
-
-<b id="DS3Aspect">
-GREEN
-</b>
-
-
-<br>
-
-
-<span>
-Reason:
-</span>
-
-<p id="DS3Reason">
-Two blocks clear
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="block">
-
-
-<div class="signal green" id="DS2"></div>
-
-
-<h3>
-SIGNAL DS2
-</h3>
-
-
-<h4>
-BLOCK 2
-</h4>
-
-
-<p id="DB2">
-FREE
-</p>
-
-
-
-<div class="signal-info">
-
-
-<span>
-Aspect:
-</span>
-
-<b id="DS2Aspect">
-GREEN
-</b>
-
-
-<br>
-
-
-<span>
-Reason:
-</span>
-
-<p id="DS2Reason">
-Two blocks clear
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="block">
-
-
-<div class="signal green" id="DS1"></div>
-
-
-<h3>
-SIGNAL DS1
-</h3>
-
-
-<h4>
-BLOCK 1
-</h4>
-
-
-<p id="DB1">
-FREE
-</p>
-
-
-
-<div class="signal-info">
-
-
-<span>
-Aspect:
-</span>
-
-<b id="DS1Aspect">
-GREEN
-</b>
-
-
-<br>
-
-
-<span>
-Reason:
-</span>
-
-<p id="DS1Reason">
-Two blocks clear
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-</section>
-<section class="monitor-section">
-
-
-<div class="train-monitor">
-
-
-<h2>
-🚆 LIVE TRAIN MONITOR
-</h2>
-
-
-<table>
-
-
-<thead>
-
-<tr>
-
-<th>
-Train
-</th>
-
-<th>
-Line
-</th>
-
-<th>
-Current Block
-</th>
-
-<th>
-Speed
-</th>
-
-<th>
-Signal
-</th>
-
-<th>
-Status
-</th>
-
-</tr>
-
-</thead>
-
-
-
-<tbody>
-
-
-<tr>
-
-<td>
-U1
-</td>
-
-<td>
-UP
-</td>
-
-<td id="u1Block">
-BLOCK 1
-</td>
-
-<td id="u1Speed">
-45 km/h
-</td>
-
-<td id="u1Signal">
-GREEN
-</td>
-
-<td id="u1Status">
-RUNNING
-</td>
-
-</tr>
-
-
-
-
-<tr>
-
-<td>
-U2
-</td>
-
-<td>
-UP
-</td>
-
-<td id="u2Block">
-BLOCK 3
-</td>
-
-<td id="u2Speed">
-45 km/h
-</td>
-
-<td id="u2Signal">
-GREEN
-</td>
-
-<td id="u2Status">
-RUNNING
-</td>
-
-</tr>
-
-
-
-
-<tr>
-
-<td>
-D1
-</td>
-
-<td>
-DOWN
-</td>
-
-<td id="d1Block">
-BLOCK 5
-</td>
-
-<td id="d1Speed">
-45 km/h
-</td>
-
-<td id="d1Signal">
-GREEN
-</td>
-
-<td id="d1Status">
-RUNNING
-</td>
-
-</tr>
-
-
-
-
-<tr>
-
-<td>
-D2
-</td>
-
-<td>
-DOWN
-</td>
-
-<td id="d2Block">
-BLOCK 2
-</td>
-
-<td id="d2Speed">
-45 km/h
-</td>
-
-<td id="d2Signal">
-GREEN
-</td>
-
-<td id="d2Status">
-RUNNING
-</td>
-
-</tr>
-
-
-
-</tbody>
-
-
-</table>
-
-
-</div>
-
-
-
-
-
-
-<div class="block-monitor">
-
-
-<h2>
-📦 BLOCK OCCUPANCY
-</h2>
-
-
-
-<div id="blockDisplay">
-
-
-<p>
-UP BLOCK 1 :
-<span id="upBlock1">
-FREE
-</span>
-</p>
-
-
-
-<p>
-UP BLOCK 2 :
-<span id="upBlock2">
-FREE
-</span>
-</p>
-
-
-
-<p>
-UP BLOCK 3 :
-<span id="upBlock3">
-FREE
-</span>
-</p>
-
-
-
-<p>
-UP BLOCK 4 :
-<span id="upBlock4">
-FREE
-</span>
-</p>
-
-
-
-
-<p>
-DOWN BLOCK 1 :
-<span id="downBlock1">
-FREE
-</span>
-</p>
-
-
-
-<p>
-DOWN BLOCK 2 :
-<span id="downBlock2">
-FREE
-</span>
-</p>
-
-
-
-<p>
-DOWN BLOCK 3 :
-<span id="downBlock3">
-FREE
-</span>
-</p>
-
-
-
-<p>
-DOWN BLOCK 4 :
-<span id="downBlock4">
-FREE
-</span>
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-<section class="event-section">
-
-
-
-<div class="event-panel">
-
-
-<h2>
-📜 SCADA EVENT LOG
-</h2>
-
-
-<div id="eventLog">
-
-
-<p>
-[SYSTEM] SCADA System Ready
-</p>
-
-
-<p>
-[INFO] Automatic Block Signalling Initialized
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-<div class="alarm-panel">
-
-
-<h2>
-🚨 ALARM PANEL
-</h2>
-
-
-
-<div id="alarmBox">
-
-NO ACTIVE ALARM
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-<section class="system-section">
-
-
-<h2>
-🖥 SCADA SYSTEM HEALTH
-</h2>
-
-
-
-<div class="health-grid">
-
-
-<div class="health-card">
-
-
-<h3>
-Communication
-</h3>
-
-
-<p id="communication">
-HEALTHY
-</p>
-
-
-</div>
-
-
-
-
-<div class="health-card">
-
-
-<h3>
-Interlocking
-</h3>
-
-
-<p id="interlocking">
-ACTIVE
-</p>
-
-
-</div>
-
-
-
-
-<div class="health-card">
-
-
-<h3>
-Power Supply
-</h3>
-
-
-<p id="power">
-NORMAL
-</p>
-
-
-</div>
-
-
-
-
-<div class="health-card">
-
-
-<h3>
-SCADA Server
-</h3>
-
-
-<p id="scada">
-ONLINE
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-<section class="signal-summary">
-
-
-<h2>
-🚦 SIGNAL SUMMARY
-</h2>
-
-
-
-<div class="signal-grid">
-
-
-
-<div class="signal-card">
-
-
-<h3>
-UP SIGNALS
-</h3>
-
-
-<p>
-US1 :
-<span id="sumUS1">
-GREEN
-</span>
-</p>
-
-
-<p>
-US2 :
-<span id="sumUS2">
-GREEN
-</span>
-</p>
-
-
-<p>
-US3 :
-<span id="sumUS3">
-GREEN
-</span>
-</p>
-
-
-<p>
-US4 :
-<span id="sumUS4">
-GREEN
-</span>
-</p>
-
-
-</div>
-
-
-
-
-
-
-<div class="signal-card">
-
-
-<h3>
-DOWN SIGNALS
-</h3>
-
-
-<p>
-DS1 :
-<span id="sumDS1">
-GREEN
-</span>
-</p>
-
-
-<p>
-DS2 :
-<span id="sumDS2">
-GREEN
-</span>
-</p>
-
-
-<p>
-DS3 :
-<span id="sumDS3">
-GREEN
-</span>
-</p>
-
-
-<p>
-DS4 :
-<span id="sumDS4">
-GREEN
-</span>
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-<footer>
-
-
-<div>
-
-
-<h3>
-🚇 Smart Metro Automatic Block Signalling & SCADA
-</h3>
-
-
-<p>
-Operations Control Centre Simulation
-</p>
-
-
-</div>
-
-
-
-<div>
-
-
-<p>
-B.Tech Engineering Project
-</p>
-
-
-<p>
-HTML • CSS • JavaScript
-</p>
-
-
-</div>
-
-
-
-</footer>
-
-
-
-
-
-<script src="script.js"></script>
-
-
-</body>
-
-
+    <script src="script.js"></script>
+  </body>
 </html>
