@@ -166,7 +166,7 @@ Future enhancements can include:
 
 **Yash Singh**
 
-B.Tech Electronics and Communication Engineering
+B.Tech Electronics and Computer Engineering
 
 ---
 
