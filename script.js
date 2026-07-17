@@ -1,10 +1,3 @@
-// ================================
-// SMART METRO ABS SCADA SYSTEM
-// FINAL TRAIN + SIGNAL ENGINE
-// PART 1/5
-// ================================
-
-// ---------- DOM ELEMENTS ----------
 
 const clock = document.getElementById("clock");
 
@@ -159,10 +152,6 @@ function addLog(message) {
     log.prepend(p);
   }
 }
-// =================================
-// PART 2/5
-// BLOCK + SIGNAL CONTROL
-// =================================
 
 function getLineBlocks(train) {
   return train.line === "UP" ? upBlocks : downBlocks;
@@ -293,10 +282,6 @@ function getNextSignal(train) {
 
   return signal;
 }
-// =================================
-// PART 3/5
-// TRAIN MOVEMENT ENGINE
-// =================================
 
 function checkFollowingDistance(train) {
   // UP FOLLOWING TRAIN
@@ -434,10 +419,6 @@ function simulationLoop() {
 
   animationFrame = requestAnimationFrame(simulationLoop);
 }
-// =================================
-// PART 4/5
-// SCADA DISPLAY SYSTEM
-// =================================
 
 function setSignalColor(id, status) {
   let element = document.getElementById(id);
@@ -594,10 +575,6 @@ function updateSCADA() {
 
   updateDashboard();
 }
-// =================================
-// PART 5/5
-// CONTROL SYSTEM + EMERGENCY
-// =================================
 
 function startSystem() {
   if (emergency) {
