@@ -173,3 +173,5 @@ B.Tech Electronics and Computer Engineering
 # 📄 License
 
 This project is developed for educational and demonstration purposes.
+
+Demo Working Dashboard - https://smart-metro-abs-scada.onrender.com
